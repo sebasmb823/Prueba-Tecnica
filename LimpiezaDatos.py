@@ -14,25 +14,39 @@ print(f"Filas duplicadas despues de la limpieza: {df_transacciones.duplicated().
 
 #-------------- Estandarizacion de datos -----------------------
 
-df_transacciones["tipo_producto"] = df_transacciones["tipo_producto"].str.lower()
+# df_transacciones["tipo_producto"] = df_transacciones["tipo_producto"].str.lower()
 
-print("--- Limpieza tipo producto ---")
-print(df_transacciones["tipo_producto"].unique())
-#Limpieza tipo producto
-df_transacciones["tipo_producto"] = df_transacciones["tipo_producto"].replace({
-    "ahorros": "Cuenta de Ahorros",
-    "cuenta de ahorros" : "Cuenta de Ahorros",
-    "cuenta ahorros" : "Cuenta de Ahorros",
-    "cta_ahorros":"Cuenta de Ahorros",
-    "cdt " : "CDT",
-    "cdt" : "CDT",
-    "certificado de deposito" : "CDT",
-    "crédito" : "Crédito",
-    "credito" : "Crédito",
-    "cuenta corriente" : "Cuenta Corriente",
-    "corriente" : "Cuenta Corriente",
-    "cta corriente" : "Cuenta Corriente"
+# print("--- Limpieza tipo producto ---")
+# print(df_transacciones["tipo_producto"].unique())
+# #Limpieza tipo producto
+# df_transacciones["tipo_producto"] = df_transacciones["tipo_producto"].replace({
+#     "ahorros": "Cuenta de Ahorros",
+#     "cuenta de ahorros" : "Cuenta de Ahorros",
+#     "cuenta ahorros" : "Cuenta de Ahorros",
+#     "cta_ahorros":"Cuenta de Ahorros",
+#     "cdt " : "CDT",
+#     "cdt" : "CDT",
+#     "certificado de deposito" : "CDT",
+#     "crédito" : "Crédito",
+#     "credito" : "Crédito",
+#     "cuenta corriente" : "Cuenta Corriente",
+#     "corriente" : "Cuenta Corriente",
+#     "cta corriente" : "Cuenta Corriente"
+# })
+# print("----------------------------------------")
+# print(df_transacciones["tipo_producto"].unique())
+
+#Limpieza columna moneda
+print(df_transacciones["moneda"].unique())
+
+df_transacciones["moneda"] = df_transacciones["moneda"].replace({
+    "Pesos" : "COP",
+    "Dolares" : "USD",
+    "cop" : "COP",
+    "pesos" : "COP",
+    "usd" : "USD",
+    "$" : "COP" 
 })
 
-print("----------------------------------------")
-print(df_transacciones["tipo_producto"].unique())
+df_transacciones["moneda"] = df_transacciones["moneda"].fillna("Sin categoría")
+print(df_transacciones["moneda"].unique())
