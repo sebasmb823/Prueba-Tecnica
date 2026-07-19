@@ -161,18 +161,93 @@ print(df_clientes.columns)
 #'segmento', 'ciudad', 'fecha_alta', 'contacto', 'productos', 'activo']
 
 
-print(df_clientes["id_cliente"].duplicated().sum())
-print(df_clientes["id_cliente"].value_counts())
+# print(df_clientes["id_cliente"].duplicated().sum())
+# print(df_clientes["id_cliente"].value_counts())
 
 #id_cliente duplicado 1011, 1004
 
-print(df_clientes[df_clientes["id_cliente"] == 1011].T)
-print(df_clientes[df_clientes["id_cliente"] == 1004].T)
-
+# print(df_clientes[df_clientes["id_cliente"] == 1011].T)
+# print(df_clientes[df_clientes["id_cliente"] == 1004].T)
 
 df_clientes = df_clientes.drop_duplicates(subset="id_cliente", keep="first")
-print(df_clientes["id_cliente"].value_counts())
+#print(df_clientes["id_cliente"].value_counts())
 
 print(df_clientes["tipo_documento"].unique())
+
+df_clientes["tipo_documento"] = df_clientes["tipo_documento"].replace({
+    "cc" : "C.C.",
+    "nit" : "NIT",
+    "CC" : "C.C."
+})
+df_clientes["tipo_documento"] = df_clientes["tipo_documento"].fillna("Sin tipo documento")
+print(df_clientes["tipo_documento"].unique())
+
+#----Limpieza columna numero_documento
+df_clientes["numero_documento"] = df_clientes["numero_documento"].str.replace(".","", regex= False)
+
+#Limpieza segmento
+print(df_clientes["segmento"].unique())
+
+df_clientes["segmento"] = df_clientes["segmento"].replace({
+    "personal" : "Personal",
+    "premium": "Premium",
+    "EMPRESARIAL" : "Empresarial",
+    "Pyme" : "PYME",
+    "pyme" : "PYME"
+})
+df_clientes["segmento"] = df_clientes["segmento"].fillna("Sin segmento")
+print(df_clientes["segmento"].unique())
+
+#Limpieza columna ciudad
+df_clientes["ciudad"] = df_clientes["ciudad"].str.capitalize()
+print(df_clientes["ciudad"].unique())
+
+df_clientes["ciudad"] = df_clientes["ciudad"].replace({
+    "  bogotá " : "Bogotá",
+    "B/quilla" : "Barranquilla",
+    "Bogota" : "Bogotá",
+    " cúcuta" : "Cúcuta",
+    "Medellin" : "Medellín"
+})
+
+print(df_clientes["ciudad"].unique())
+
+#Limpieza columna activo
+print(df_clientes["activo"].unique())
+print(df_clientes["activo"].dtype)
+
+df_clientes["activo"] = df_clientes["activo"].replace({
+    "SI" : True,
+    "Si" : True,
+    "NO" : False,
+    "No" : False
+})
+print(df_clientes["activo"].unique())
+
+
+
+#Limpieza columna fecha
+
+print(df_clientes["fecha_alta"].head(10))
+#Valores a cambiar jul,ago,sep,oct,may,mar,ene,jun
+
+df_clientes["fecha_alta"] = df_clientes["fecha_alta"].str.replace("jul", "07", regex=False)
+df_clientes["fecha_alta"] = df_clientes["fecha_alta"].str.replace("ago", "08", regex=False)
+df_clientes["fecha_alta"] = df_clientes["fecha_alta"].str.replace("sep", "09", regex=False)
+df_clientes["fecha_alta"] = df_clientes["fecha_alta"].str.replace("oct", "10", regex=False)
+df_clientes["fecha_alta"] = df_clientes["fecha_alta"].str.replace("may", "05", regex=False)
+df_clientes["fecha_alta"] = df_clientes["fecha_alta"].str.replace("mar", "03", regex=False)
+df_clientes["fecha_alta"] = df_clientes["fecha_alta"].str.replace("ene", "01", regex=False)
+df_clientes["fecha_alta"] = df_clientes["fecha_alta"].str.replace("jun", "06", regex=False)
+
+df_clientes["fecha_alta"] = pd.to_datetime(
+    df_clientes["fecha_alta"],
+    format="mixed",
+    dayfirst=True,
+    errors="coerce"
+)
+print(df_clientes["fecha_alta"].head(10))
+
+
 
 # df_clientes = df_clientes.explode("productos")
