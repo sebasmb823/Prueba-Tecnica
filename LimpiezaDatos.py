@@ -62,11 +62,28 @@ print(f"Filas duplicadas despues de la limpieza: {df_transacciones.duplicated().
 # print(df_transacciones["fecha"].head())
 
 #Limpieza de la columna monto
-print(df_transacciones["monto"].info())
-print(df_transacciones["monto"].isna().sum())
+# print(df_transacciones["monto"].info())
+# print(df_transacciones["monto"].isna().sum())
 
-df_transacciones["monto"] = df_transacciones["monto"].str.replace("$","",regex=False)
-df_transacciones["monto"] = df_transacciones["monto"].str.replace("COP","",regex=False)
+# df_transacciones["monto"] = df_transacciones["monto"].str.replace("$","",regex=False)
+# df_transacciones["monto"] = df_transacciones["monto"].str.replace("COP","",regex=False)
 
-print(df_transacciones["monto"])
+# print(df_transacciones["monto"])
+
+#Limpieza de la columna tasa interes
+
+print(df_transacciones["tasa_interes"].isna().sum())
+
+df_transacciones["tasa_interes"] = df_transacciones["tasa_interes"].str.replace("%","", regex=False)
+df_transacciones["tasa_interes"] = df_transacciones["tasa_interes"].fillna(0)
+print(df_transacciones["tasa_interes"].isna().sum())
+
+print(df_transacciones["tasa_interes"])
+
+#Limpieza de la columna plazo dias
+print(df_transacciones["plazo_dias"].isna().sum())
+df_transacciones["plazo_dias"] = df_transacciones["plazo_dias"].str.replace("dias","",regex=False)
+df_transacciones["plazo_dias"] = df_transacciones["plazo_dias"].fillna(0)
+print(df_transacciones["plazo_dias"].isna().sum())
+print(df_transacciones["plazo_dias"])
 
