@@ -72,18 +72,64 @@ print(f"Filas duplicadas despues de la limpieza: {df_transacciones.duplicated().
 
 #Limpieza de la columna tasa interes
 
-print(df_transacciones["tasa_interes"].isna().sum())
+# print(df_transacciones["tasa_interes"].isna().sum())
 
-df_transacciones["tasa_interes"] = df_transacciones["tasa_interes"].str.replace("%","", regex=False)
-df_transacciones["tasa_interes"] = df_transacciones["tasa_interes"].fillna(0)
-print(df_transacciones["tasa_interes"].isna().sum())
+# df_transacciones["tasa_interes"] = df_transacciones["tasa_interes"].str.replace("%","", regex=False)
+# df_transacciones["tasa_interes"] = df_transacciones["tasa_interes"].fillna(0)
+# print(df_transacciones["tasa_interes"].isna().sum())
 
-print(df_transacciones["tasa_interes"])
+# print(df_transacciones["tasa_interes"])
 
-#Limpieza de la columna plazo dias
-print(df_transacciones["plazo_dias"].isna().sum())
-df_transacciones["plazo_dias"] = df_transacciones["plazo_dias"].str.replace("dias","",regex=False)
-df_transacciones["plazo_dias"] = df_transacciones["plazo_dias"].fillna(0)
-print(df_transacciones["plazo_dias"].isna().sum())
-print(df_transacciones["plazo_dias"])
+# #Limpieza de la columna plazo dias
+# print(df_transacciones["plazo_dias"].isna().sum())
+# df_transacciones["plazo_dias"] = df_transacciones["plazo_dias"].str.replace("dias","",regex=False)
+# df_transacciones["plazo_dias"] = df_transacciones["plazo_dias"].fillna(0)
+# print(df_transacciones["plazo_dias"].isna().sum())
+# print(df_transacciones["plazo_dias"])
 
+#limpieza columna canal
+# print(df_transacciones["canal"].isna().sum())
+# print(df_transacciones["canal"].unique())
+
+# df_transacciones["canal"] = df_transacciones["canal"].replace({
+#     "web" : "Web",
+#     "ATM" : "Cajero",
+#     "oficina" : "Oficina",
+#     "OFICINA" : "Oficina",
+#     "cajero automatico" : "Cajero",
+#     "app movil" : "App",
+#     "APP" : "App"
+# })
+# print(df_transacciones["canal"].unique())
+
+#limpieza columna estado
+# print(df_transacciones["estado"].isna().sum())
+# print(df_transacciones["estado"].unique())
+
+# df_transacciones["estado"] = df_transacciones["estado"].replace({
+#     "pend" : "Pendiente",
+#     "aprobado" : "Aprobada",
+#     "rechazada" : "Rechazada",
+#     "APROBADA" : "Aprobada",
+#     "PENDIENTE" : "Pendiente"
+# })
+
+# print(df_transacciones["estado"].unique())
+
+#Limpieza columna sucursal 
+print(df_transacciones["sucursal"].isna().sum())
+print(df_transacciones["sucursal"].unique())
+
+df_transacciones["sucursal"] = df_transacciones["sucursal"].replace({
+    "cali" : "Cali",
+    "Bogota" : "Bogotá",
+    "b/quilla" : "Barranquilla",
+    "Medellin" : "Medellín",
+    "medellín" : "Medellín",
+    "BOGOTA" : "Bogotá",
+    "  Bogotá ": "Bogotá"
+})
+
+df_transacciones["sucursal"] = df_transacciones["sucursal"].fillna("Sin sucursal")
+print(df_transacciones["sucursal"].isna().sum())
+print(df_transacciones["sucursal"].unique())
