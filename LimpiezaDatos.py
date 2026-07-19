@@ -1,98 +1,95 @@
 import pandas as pd
 
-# df_transacciones = pd.read_csv("transacciones.csv", sep=";")
+df_transacciones = pd.read_csv("transacciones.csv", sep=";")
 
-# print(df_transacciones.head())
+print(df_transacciones.head())
 
-# print(df_transacciones.isnull().sum())
+print(df_transacciones.isnull().sum())
 
-# print(f"Filas duplicadas: {df_transacciones.duplicated().sum()}")
-# #6 filas duplicadas
+print(f"Filas duplicadas: {df_transacciones.duplicated().sum()}")
+#6 filas duplicadas
 
-# df_transacciones.drop_duplicates(inplace=True)
-# print(f"Filas duplicadas despues de la limpieza: {df_transacciones.duplicated().sum()}")
+df_transacciones.drop_duplicates(inplace=True)
+print(f"Filas duplicadas despues de la limpieza: {df_transacciones.duplicated().sum()}")
 
 #-------------- Estandarizacion de datos -----------------------
 
-# df_transacciones["tipo_producto"] = df_transacciones["tipo_producto"].str.lower()
+df_transacciones["tipo_producto"] = df_transacciones["tipo_producto"].str.lower()
 
 # print("--- Limpieza tipo producto ---")
 # print(df_transacciones["tipo_producto"].unique())
 # #Limpieza tipo producto
-# df_transacciones["tipo_producto"] = df_transacciones["tipo_producto"].replace({
-#     "ahorros": "Cuenta de Ahorros",
-#     "cuenta de ahorros" : "Cuenta de Ahorros",
-#     "cuenta ahorros" : "Cuenta de Ahorros",
-#     "cta_ahorros":"Cuenta de Ahorros",
-#     "cdt " : "CDT",
-#     "cdt" : "CDT",
-#     "certificado de deposito" : "CDT",
-#     "crédito" : "Crédito",
-#     "credito" : "Crédito",
-#     "cuenta corriente" : "Cuenta Corriente",
-#     "corriente" : "Cuenta Corriente",
-#     "cta corriente" : "Cuenta Corriente"
-# })
+df_transacciones["tipo_producto"] = df_transacciones["tipo_producto"].replace({
+    "ahorros": "Cuenta de Ahorros",
+    "cuenta de ahorros" : "Cuenta de Ahorros",
+    "cuenta ahorros" : "Cuenta de Ahorros",
+    "cta_ahorros":"Cuenta de Ahorros",
+    "cdt " : "CDT",
+    "cdt" : "CDT",
+    "certificado de deposito" : "CDT",
+    "crédito" : "Crédito",
+    "credito" : "Crédito",
+    "cuenta corriente" : "Cuenta Corriente",
+    "corriente" : "Cuenta Corriente",
+    "cta corriente" : "Cuenta Corriente"
+})
 # print("----------------------------------------")
 # print(df_transacciones["tipo_producto"].unique())
 
 #Limpieza columna moneda
 # print(df_transacciones["moneda"].unique())
 
-# df_transacciones["moneda"] = df_transacciones["moneda"].replace({
-#     "Pesos" : "COP",
-#     "Dolares" : "USD",
-#     "cop" : "COP",
-#     "pesos" : "COP",
-#     "usd" : "USD",
-#     "$" : "COP" 
-# })
+df_transacciones["moneda"] = df_transacciones["moneda"].replace({
+    "Pesos" : "COP",
+    "Dolares" : "USD",
+    "cop" : "COP",
+    "pesos" : "COP",
+    "usd" : "USD",
+    "$" : "COP" 
+})
 
-# df_transacciones["moneda"] = df_transacciones["moneda"].fillna("Sin categoría")
+df_transacciones["moneda"] = df_transacciones["moneda"].fillna("Sin categoría")
 # print(df_transacciones["moneda"].unique())
 
-#------ Limpieza fechas
 
-# df_transacciones["fecha"] = pd.to_datetime(
-#     df_transacciones["fecha"],
-#     format="mixed",
-#     dayfirst=True,
-#     errors="coerce"
-# )
+#------ Limpieza fechas
+df_transacciones["fecha"] = pd.to_datetime(
+    df_transacciones["fecha"],
+    format="mixed",
+    dayfirst=True,
+    errors="coerce"
+)
 # print(df_transacciones["fecha"].head(10))
 
 #Limpieza de la columna monto
 # print(df_transacciones["monto"].head(10))
 # print(df_transacciones["monto"].isna().sum())
 
-# df_transacciones["monto"] = df_transacciones["monto"].str.replace("$","",regex=False)
-# df_transacciones["monto"] = df_transacciones["monto"].str.replace("COP","",regex=False)
-# df_transacciones["monto"] = df_transacciones["monto"].str.replace(".","",regex=False)
-# df_transacciones["monto"] = df_transacciones["monto"].str.replace(",","",regex=False)
-# df_transacciones["monto"] = df_transacciones["monto"].replace("-", pd.NA)
-# df_transacciones["monto"] = df_transacciones["monto"].replace("sin dato", "")
-# df_transacciones["monto"] = df_transacciones["monto"].fillna(0)
-
-
-# df_transacciones["monto"] = pd.to_numeric(df_transacciones["monto"])
+df_transacciones["monto"] = df_transacciones["monto"].str.replace("$","",regex=False)
+df_transacciones["monto"] = df_transacciones["monto"].str.replace("COP","",regex=False)
+df_transacciones["monto"] = df_transacciones["monto"].str.replace(".","",regex=False)
+df_transacciones["monto"] = df_transacciones["monto"].str.replace(",","",regex=False)
+df_transacciones["monto"] = df_transacciones["monto"].replace("-", pd.NA)
+df_transacciones["monto"] = df_transacciones["monto"].replace("sin dato", "")
+df_transacciones["monto"] = df_transacciones["monto"].fillna(0)
+df_transacciones["monto"] = pd.to_numeric(df_transacciones["monto"])
 
 # print(df_transacciones["monto"].head(10))
 # print(df_transacciones["monto"].dtype)
 
+
 #Limpieza de la columna tasa interes
-
 # print(df_transacciones["tasa_interes"].isna().sum())
-
-# df_transacciones["tasa_interes"] = df_transacciones["tasa_interes"].str.replace("%","", regex=False)
-# df_transacciones["tasa_interes"] = df_transacciones["tasa_interes"].fillna(0)
+df_transacciones["tasa_interes"] = df_transacciones["tasa_interes"].str.replace("%","", regex=False)
+df_transacciones["tasa_interes"] = df_transacciones["tasa_interes"].fillna(0)
 # print(df_transacciones["tasa_interes"].isna().sum())
 
 # print(df_transacciones["tasa_interes"])
 
-# #Limpieza de la columna plazo dias
+#Limpieza de la columna plazo dias
 # print(df_transacciones["plazo_dias"].isna().sum())
-# df_transacciones["plazo_dias"] = df_transacciones["plazo_dias"].str.replace("dias","",regex=False)
-# df_transacciones["plazo_dias"] = df_transacciones["plazo_dias"].fillna(0)
+df_transacciones["plazo_dias"] = df_transacciones["plazo_dias"].str.replace("dias","",regex=False)
+df_transacciones["plazo_dias"] = df_transacciones["plazo_dias"].fillna(0)
 # print(df_transacciones["plazo_dias"].isna().sum())
 # print(df_transacciones["plazo_dias"])
 
@@ -100,28 +97,28 @@ import pandas as pd
 # print(df_transacciones["canal"].isna().sum())
 # print(df_transacciones["canal"].unique())
 
-# df_transacciones["canal"] = df_transacciones["canal"].replace({
-#     "web" : "Web",
-#     "ATM" : "Cajero",
-#     "oficina" : "Oficina",
-#     "OFICINA" : "Oficina",
-#     "cajero automatico" : "Cajero",
-#     "app movil" : "App",
-#     "APP" : "App"
-# })
+df_transacciones["canal"] = df_transacciones["canal"].replace({
+    "web" : "Web",
+    "ATM" : "Cajero",
+    "oficina" : "Oficina",
+    "OFICINA" : "Oficina",
+    "cajero automatico" : "Cajero",
+    "app movil" : "App",
+    "APP" : "App"
+})
 # print(df_transacciones["canal"].unique())
 
 #limpieza columna estado
 # print(df_transacciones["estado"].isna().sum())
 # print(df_transacciones["estado"].unique())
 
-# df_transacciones["estado"] = df_transacciones["estado"].replace({
-#     "pend" : "Pendiente",
-#     "aprobado" : "Aprobada",
-#     "rechazada" : "Rechazada",
-#     "APROBADA" : "Aprobada",
-#     "PENDIENTE" : "Pendiente"
-# })
+df_transacciones["estado"] = df_transacciones["estado"].replace({
+    "pend" : "Pendiente",
+    "aprobado" : "Aprobada",
+    "rechazada" : "Rechazada",
+    "APROBADA" : "Aprobada",
+    "PENDIENTE" : "Pendiente"
+})
 
 # print(df_transacciones["estado"].unique())
 
@@ -129,28 +126,28 @@ import pandas as pd
 # print(df_transacciones["sucursal"].isna().sum())
 # print(df_transacciones["sucursal"].unique())
 
-# df_transacciones["sucursal"] = df_transacciones["sucursal"].replace({
-#     "cali" : "Cali",
-#     "Bogota" : "Bogotá",
-#     "b/quilla" : "Barranquilla",
-#     "Medellin" : "Medellín",
-#     "medellín" : "Medellín",
-#     "BOGOTA" : "Bogotá",
-#     "  Bogotá ": "Bogotá"
-# })
+df_transacciones["sucursal"] = df_transacciones["sucursal"].replace({
+    "cali" : "Cali",
+    "Bogota" : "Bogotá",
+    "b/quilla" : "Barranquilla",
+    "Medellin" : "Medellín",
+    "medellín" : "Medellín",
+    "BOGOTA" : "Bogotá",
+    "  Bogotá ": "Bogotá"
+})
 
-# df_transacciones["sucursal"] = df_transacciones["sucursal"].fillna("Sin sucursal")
+df_transacciones["sucursal"] = df_transacciones["sucursal"].fillna("Sin sucursal")
 # print(df_transacciones["sucursal"].isna().sum())
 # print(df_transacciones["sucursal"].unique())
 
 
 #Columna monto COP
-# dolar = 4000
-# df_transacciones["monto_COP"] = df_transacciones["monto"]
+dolar = 4000
+df_transacciones["monto_COP"] = df_transacciones["monto"]
 
-# df_transacciones.loc[df_transacciones["moneda"] == "USD", "monto_COP"] = df_transacciones["monto"] * dolar
+df_transacciones.loc[df_transacciones["moneda"] == "USD", "monto_COP"] = df_transacciones["monto"] * dolar
 
-# print(df_transacciones["monto_COP"])
+print(df_transacciones["monto_COP"])
 
 
 #Limpieza dataset clientes
@@ -249,5 +246,21 @@ df_clientes["fecha_alta"] = pd.to_datetime(
 print(df_clientes["fecha_alta"].head(10))
 
 
+#----- CSV limpio
 
-# df_clientes = df_clientes.explode("productos")
+print(df_clientes.columns)
+print(df_transacciones.columns)
+
+print(df_clientes["id_cliente"].dtype)
+print(df_transacciones["id_cliente"].dtype)
+
+df_limpio = pd.merge(
+    df_transacciones,
+    df_clientes,
+    on="id_cliente",
+    how="left"
+)
+
+df_limpio["estado_cliente"] = df_limpio["nombre"].fillna("Sin identificar")
+
+df_limpio.to_csv("baseDatosLimpia.csv", index=False)
