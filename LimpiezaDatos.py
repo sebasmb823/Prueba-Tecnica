@@ -37,16 +37,36 @@ print(f"Filas duplicadas despues de la limpieza: {df_transacciones.duplicated().
 # print(df_transacciones["tipo_producto"].unique())
 
 #Limpieza columna moneda
-print(df_transacciones["moneda"].unique())
+# print(df_transacciones["moneda"].unique())
 
-df_transacciones["moneda"] = df_transacciones["moneda"].replace({
-    "Pesos" : "COP",
-    "Dolares" : "USD",
-    "cop" : "COP",
-    "pesos" : "COP",
-    "usd" : "USD",
-    "$" : "COP" 
-})
+# df_transacciones["moneda"] = df_transacciones["moneda"].replace({
+#     "Pesos" : "COP",
+#     "Dolares" : "USD",
+#     "cop" : "COP",
+#     "pesos" : "COP",
+#     "usd" : "USD",
+#     "$" : "COP" 
+# })
 
-df_transacciones["moneda"] = df_transacciones["moneda"].fillna("Sin categoría")
-print(df_transacciones["moneda"].unique())
+# df_transacciones["moneda"] = df_transacciones["moneda"].fillna("Sin categoría")
+# print(df_transacciones["moneda"].unique())
+
+#------ Limpieza fechas
+
+# df_transacciones["fecha"] = pd.to_datetime(
+#     df_transacciones["fecha"],
+#     format="mixed",
+#     dayfirst=True,
+#     errors="coerce"
+# )
+# print(df_transacciones["fecha"].head())
+
+#Limpieza de la columna monto
+print(df_transacciones["monto"].info())
+print(df_transacciones["monto"].isna().sum())
+
+df_transacciones["monto"] = df_transacciones["monto"].str.replace("$","",regex=False)
+df_transacciones["monto"] = df_transacciones["monto"].str.replace("COP","",regex=False)
+
+print(df_transacciones["monto"])
+
