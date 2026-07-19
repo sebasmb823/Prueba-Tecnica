@@ -1,16 +1,16 @@
 import pandas as pd
 
-df_transacciones = pd.read_csv("transacciones.csv", sep=";")
+# df_transacciones = pd.read_csv("transacciones.csv", sep=";")
 
-print(df_transacciones.head())
+# print(df_transacciones.head())
 
-print(df_transacciones.isnull().sum())
+# print(df_transacciones.isnull().sum())
 
-print(f"Filas duplicadas: {df_transacciones.duplicated().sum()}")
-#6 filas duplicadas
+# print(f"Filas duplicadas: {df_transacciones.duplicated().sum()}")
+# #6 filas duplicadas
 
-df_transacciones.drop_duplicates(inplace=True)
-print(f"Filas duplicadas despues de la limpieza: {df_transacciones.duplicated().sum()}")
+# df_transacciones.drop_duplicates(inplace=True)
+# print(f"Filas duplicadas despues de la limpieza: {df_transacciones.duplicated().sum()}")
 
 #-------------- Estandarizacion de datos -----------------------
 
@@ -53,13 +53,13 @@ print(f"Filas duplicadas despues de la limpieza: {df_transacciones.duplicated().
 
 #------ Limpieza fechas
 
-df_transacciones["fecha"] = pd.to_datetime(
-    df_transacciones["fecha"],
-    format="mixed",
-    dayfirst=True,
-    errors="coerce"
-)
-print(df_transacciones["fecha"].head(10))
+# df_transacciones["fecha"] = pd.to_datetime(
+#     df_transacciones["fecha"],
+#     format="mixed",
+#     dayfirst=True,
+#     errors="coerce"
+# )
+# print(df_transacciones["fecha"].head(10))
 
 #Limpieza de la columna monto
 # print(df_transacciones["monto"].head(10))
@@ -151,3 +151,28 @@ print(df_transacciones["fecha"].head(10))
 # df_transacciones.loc[df_transacciones["moneda"] == "USD", "monto_COP"] = df_transacciones["monto"] * dolar
 
 # print(df_transacciones["monto_COP"])
+
+
+#Limpieza dataset clientes
+df_clientes = pd.read_json("clientes.json")
+
+print(df_clientes.columns)
+#'id_cliente', 'nombre', 'tipo_documento', 'numero_documento',
+#'segmento', 'ciudad', 'fecha_alta', 'contacto', 'productos', 'activo']
+
+
+print(df_clientes["id_cliente"].duplicated().sum())
+print(df_clientes["id_cliente"].value_counts())
+
+#id_cliente duplicado 1011, 1004
+
+print(df_clientes[df_clientes["id_cliente"] == 1011].T)
+print(df_clientes[df_clientes["id_cliente"] == 1004].T)
+
+
+df_clientes = df_clientes.drop_duplicates(subset="id_cliente", keep="first")
+print(df_clientes["id_cliente"].value_counts())
+
+print(df_clientes["tipo_documento"].unique())
+
+# df_clientes = df_clientes.explode("productos")
