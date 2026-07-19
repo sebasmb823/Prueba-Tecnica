@@ -53,22 +53,31 @@ print(f"Filas duplicadas despues de la limpieza: {df_transacciones.duplicated().
 
 #------ Limpieza fechas
 
-# df_transacciones["fecha"] = pd.to_datetime(
-#     df_transacciones["fecha"],
-#     format="mixed",
-#     dayfirst=True,
-#     errors="coerce"
-# )
-# print(df_transacciones["fecha"].head())
+df_transacciones["fecha"] = pd.to_datetime(
+    df_transacciones["fecha"],
+    format="mixed",
+    dayfirst=True,
+    errors="coerce"
+)
+print(df_transacciones["fecha"].head(10))
 
 #Limpieza de la columna monto
-# print(df_transacciones["monto"].info())
+# print(df_transacciones["monto"].head(10))
 # print(df_transacciones["monto"].isna().sum())
 
 # df_transacciones["monto"] = df_transacciones["monto"].str.replace("$","",regex=False)
 # df_transacciones["monto"] = df_transacciones["monto"].str.replace("COP","",regex=False)
+# df_transacciones["monto"] = df_transacciones["monto"].str.replace(".","",regex=False)
+# df_transacciones["monto"] = df_transacciones["monto"].str.replace(",","",regex=False)
+# df_transacciones["monto"] = df_transacciones["monto"].replace("-", pd.NA)
+# df_transacciones["monto"] = df_transacciones["monto"].replace("sin dato", "")
+# df_transacciones["monto"] = df_transacciones["monto"].fillna(0)
 
-# print(df_transacciones["monto"])
+
+# df_transacciones["monto"] = pd.to_numeric(df_transacciones["monto"])
+
+# print(df_transacciones["monto"].head(10))
+# print(df_transacciones["monto"].dtype)
 
 #Limpieza de la columna tasa interes
 
@@ -117,19 +126,28 @@ print(f"Filas duplicadas despues de la limpieza: {df_transacciones.duplicated().
 # print(df_transacciones["estado"].unique())
 
 #Limpieza columna sucursal 
-print(df_transacciones["sucursal"].isna().sum())
-print(df_transacciones["sucursal"].unique())
+# print(df_transacciones["sucursal"].isna().sum())
+# print(df_transacciones["sucursal"].unique())
 
-df_transacciones["sucursal"] = df_transacciones["sucursal"].replace({
-    "cali" : "Cali",
-    "Bogota" : "Bogotá",
-    "b/quilla" : "Barranquilla",
-    "Medellin" : "Medellín",
-    "medellín" : "Medellín",
-    "BOGOTA" : "Bogotá",
-    "  Bogotá ": "Bogotá"
-})
+# df_transacciones["sucursal"] = df_transacciones["sucursal"].replace({
+#     "cali" : "Cali",
+#     "Bogota" : "Bogotá",
+#     "b/quilla" : "Barranquilla",
+#     "Medellin" : "Medellín",
+#     "medellín" : "Medellín",
+#     "BOGOTA" : "Bogotá",
+#     "  Bogotá ": "Bogotá"
+# })
 
-df_transacciones["sucursal"] = df_transacciones["sucursal"].fillna("Sin sucursal")
-print(df_transacciones["sucursal"].isna().sum())
-print(df_transacciones["sucursal"].unique())
+# df_transacciones["sucursal"] = df_transacciones["sucursal"].fillna("Sin sucursal")
+# print(df_transacciones["sucursal"].isna().sum())
+# print(df_transacciones["sucursal"].unique())
+
+
+#Columna monto COP
+# dolar = 4000
+# df_transacciones["monto_COP"] = df_transacciones["monto"]
+
+# df_transacciones.loc[df_transacciones["moneda"] == "USD", "monto_COP"] = df_transacciones["monto"] * dolar
+
+# print(df_transacciones["monto_COP"])
